@@ -1,10 +1,10 @@
-import OfferCard from '../../components/card/offerCard';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type MainScreenProps= {
-  cardsCount: number;
+  offerCardsCount: number;
 }
 
-function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
+function MainScreen({offerCardsCount}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,7 +95,7 @@ function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Array.from({length: cardsCount}, (item, index: number) => <OfferCard key={index}/>)}
+                {Array.from({length: offerCardsCount}, (_item, index: number) => <OfferCard key={index}/>)}
               </div>
             </section>
             <div className="cities__right-section">
