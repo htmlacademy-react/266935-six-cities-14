@@ -37,7 +37,7 @@ function App({offerCardsCount}: AppScreenProps): JSX.Element {
             }
           />
           <Route
-            path = {AppRoute.Offer}
+            path = {`${AppRoute.Offer}/:offerId`}
             element = {<OfferScreen />}
           />
           <Route
