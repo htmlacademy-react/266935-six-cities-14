@@ -75,7 +75,7 @@ function MainScreen({offerCardsCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Array.from({length: offerCardsCount}, (_item, index: number) => <OfferCard key={index}/>)}
+                {Array.from({length: offerCardsCount}, (_item, index: number) => <OfferCard offerCardType='mainScreen' key={index}/>)}
               </div>
             </section>
             <div className="cities__right-section">

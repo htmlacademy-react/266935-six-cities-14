@@ -39,7 +39,7 @@ function App({offerCardsCount}: AppScreenProps): JSX.Element {
             path = {AppRoute.Favorites}
             element = {
               <PrivateRoute
-                restrictedFor={AuthorizationStatus.NoAuth}
+                restrictedFor={AuthorizationStatus.Auth}
                 redirectTo={AppRoute.Login}
               >
                 <FavoritesScreen />
