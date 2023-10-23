@@ -3,13 +3,22 @@ import { Helmet } from 'react-helmet-async';
 import { Offer } from '../../types/offer';
 
 import Header from '../../components/header/header';
-import OfferCard from '../../components/offer-card/offer-card';
+import OffersList from '../../components/offers-list/offers-list';
 
-type FavoriteScreenProps= {
+type FavoriteScreenProps = {
+  offers: Offer[];
+}
+
+type GroupedOffers = {
+  city: string;
   offers: Offer[];
 }
 
 function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
+
+  const sortedFavoriteOffers = offers.filter((offer) => offer.isFavorite)
+    ?.sort((a, b) => a.city > b.city ? 1 : -1);
+
   return (
     <div className="page">
       <Helmet>
@@ -32,7 +41,7 @@ function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.filter((offer) => offer.isFavorite).map((offer) => <OfferCard offer = {offer} offerCardType='favoritesScreen' key = {offer.id}/>)}
+                  <OffersList offerCardCount={sortedFavoriteOffers.length} offers={sortedFavoriteOffers} offerCardType='favoritesScreen'/>
                 </div>
               </li>
             </ul>

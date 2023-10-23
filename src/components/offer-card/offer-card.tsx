@@ -1,11 +1,14 @@
 import { Offer } from '../../types/offer';
 
+
 type OfferCardProps= {
   offerCardType: 'mainScreen'|'favoritesScreen';
   offer: Offer;
+  handleMouseEnter: (offerId: number) => void;
+  handleMouseLeave: () => void;
 }
 
-function OfferCard({offerCardType, offer}: OfferCardProps): JSX.Element {
+function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: OfferCardProps): JSX.Element {
   const options = {
     mainScreen: {
       className: 'cities',
@@ -22,6 +25,8 @@ function OfferCard({offerCardType, offer}: OfferCardProps): JSX.Element {
   return (
     <article
       className={`${options[offerCardType].className}__card place-card`}
+      onMouseEnter={() => handleMouseEnter(offer.id)}
+      onMouseLeave={() => handleMouseLeave()}
     >
       {offer.isFavorite ?
         <div className="place-card__mark">
