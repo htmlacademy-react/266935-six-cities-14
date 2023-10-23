@@ -1,8 +1,11 @@
+import { Offer } from '../../types/offer';
+
 type OfferCardProps= {
   offerCardType: 'mainScreen'|'favoritesScreen';
+  offer: Offer;
 }
 
-function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
+function OfferCard({offerCardType, offer}: OfferCardProps): JSX.Element {
   const options = {
     mainScreen: {
       className: 'cities',
@@ -20,20 +23,18 @@ function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
     <article
       className={`${options[offerCardType].className}__card place-card`}
     >
-      <div
-        className="place-card__mark"
-      >
-        <span>
-          Premium
-        </span>
-      </div>
+      {offer.isFavorite ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
+
       <div
         className={`${options[offerCardType].className}__image-wrapper place-card__image-wrapper`}
       >
         <a href="#">
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
+            src={offer.previewImage}
             width={`${options[offerCardType].width}`}
             height={`${options[offerCardType].hight}`}
             alt="Place image"
@@ -52,7 +53,7 @@ function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
             <b
               className="place-card__price-value"
             >
-              &euro;120
+              &euro;{offer.price}
             </b>
             <span
               className="place-card__price-text"
@@ -61,7 +62,9 @@ function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
             </span>
           </div>
           <button
-            className="place-card__bookmark-button button"
+            className={offer.isFavorite ?
+              'place-card__bookmark-button place-card__bookmark-button--active button'
+              : 'place-card__bookmark-button button'}
             type="button"
           >
             <svg
@@ -88,7 +91,7 @@ function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
             className="place-card__stars rating__stars"
           >
             <span
-              style={{width: '80%'}}
+              style={{width: offer.rating}}
             >
             </span>
             <span
@@ -104,13 +107,13 @@ function OfferCard({offerCardType}: OfferCardProps): JSX.Element {
           <a
             href="#"
           >
-            Beautiful &amp; luxurious apartment at great location
+            {offer.title}
           </a>
         </h2>
         <p
           className="place-card__type"
         >
-          Apartment
+          {offer.type[0].toUpperCase() + offer.type.slice(1)}
         </p>
       </div>
     </article>
