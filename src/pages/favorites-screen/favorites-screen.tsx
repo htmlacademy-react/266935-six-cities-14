@@ -1,9 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 
+import { Offer } from '../../types/offer';
+
 import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
 
-function FavoritesScreen(): JSX.Element {
+type FavoriteScreenProps= {
+  offers: Offer[];
+}
+
+function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -26,24 +32,7 @@ function FavoritesScreen(): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-
-                  <OfferCard offerCardType='favoritesScreen'/>
-
-                </div>
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-
-                  <OfferCard offerCardType='favoritesScreen'/>
-
+                  {offers.filter((offer) => offer.isFavorite).map((offer) => <OfferCard offer = {offer} offerCardType='favoritesScreen' key = {offer.id}/>)}
                 </div>
               </li>
             </ul>
