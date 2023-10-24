@@ -14,6 +14,8 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState(0);
 
+  console.log(selectedOfferCardId);
+
   function handleMouseEnter(offerId: number){
     setSelectedOfferCardId(offerId);
   }
