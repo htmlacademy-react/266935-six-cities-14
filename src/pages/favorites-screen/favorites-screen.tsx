@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { Offer } from '../../types/offer';
 
+import FooterLogo from '../../components/footer-logo/footer-logo';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 
@@ -11,8 +12,10 @@ type FavoriteScreenProps = {
 
 function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
 
-  const sortedFavoriteOffers = offers.filter((offer) => offer.isFavorite)
-    ?.sort((a, b) => a.city > b.city ? 1 : -1);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const cities: string[] = [];
+
+  favoriteOffers.forEach((offer) => cities.includes(offer.city.name) ? '' : cities.push(offer.city.name));
 
   return (
     <div className="page">
@@ -22,32 +25,49 @@ function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
 
       <Header />
 
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  <OffersList offerCardCount={sortedFavoriteOffers.length} offers={sortedFavoriteOffers} offerCardType='favoritesScreen'/>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
-      </footer>
+      {favoriteOffers.length === 0 ? (
+        <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+              </div>
+            </section>
+          </div>
+        </main>
+      ) : (
+        <main className="page__main page__main--favorites">
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {cities.map((city, index) => (
+                  <li className="favorites__locations-items" key={index}>
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div className="favorites__places">
+                      <OffersList
+                        offerCardCount={favoriteOffers.filter((offer) => offer.city.name === city).length}
+                        offers={favoriteOffers.filter((offer) => offer.city.name === city)}
+                        offerCardType='favoritesScreen'
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </main>
+      )}
+
+      <FooterLogo />
     </div>
   );
 }

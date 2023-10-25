@@ -28,7 +28,7 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/5.jpg'
     ],
     title: 'Waterfront with extraordinary view',
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 4.8,
     type: 'room',
@@ -55,7 +55,7 @@ export const offers: Offer[] = [
   },
   {
     city: {
-      name: 'Amsterdam',
+      name: 'Dusseldorf',
       location: {
         'latitude': 52.37454,
         'longitude': 4.897976,
