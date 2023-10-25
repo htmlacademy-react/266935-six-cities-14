@@ -1,4 +1,5 @@
 import { Offer } from '../../types/offer';
+import { convertRating } from '../../utils';
 
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
@@ -99,7 +100,7 @@ function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: O
             className="place-card__stars rating__stars"
           >
             <span
-              style={{width: offer.rating}}
+              style={{width: convertRating(offer.rating)}}
             >
             </span>
             <span

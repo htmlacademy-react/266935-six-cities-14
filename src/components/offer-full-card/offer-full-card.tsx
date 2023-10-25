@@ -1,4 +1,5 @@
 import { Setting } from '../../const';
+import { convertRating, formatDate } from '../../utils';
 
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
@@ -41,7 +42,7 @@ function OfferFullCard({offer, offerReviews}: OfferCardProps): JSX.Element {
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
-              <span style={{ width: offer.rating }}></span>
+              <span style={{ width: convertRating(offer.rating) }}></span>
               <span className="visually-hidden">Rating</span>
             </div>
             <span className="offer__rating-value rating__value">{offer.rating}</span>
@@ -107,13 +108,13 @@ function OfferFullCard({offer, offerReviews}: OfferCardProps): JSX.Element {
                   <div className="reviews__info">
                     <div className="reviews__rating rating" >
                       <div className="reviews__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
+                        <span style={{ width: convertRating(offerReview.rating) }}></span>
                         <span className="visually-hidden">Rating</span>
                       </div>
                     </div>
                     <p className="reviews__text">
                       {offerReview.comment}
-                    </p><time className="reviews__time" dateTime={offerReview.date}>April 2019</time>
+                    </p><time className="reviews__time" dateTime={offerReview.date}>{formatDate(offerReview.date)}</time>
 
 
                   </div>
