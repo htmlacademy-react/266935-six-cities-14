@@ -13,9 +13,10 @@ import { Review } from '../../types/review';
 type OfferScreenProps= {
   offers: Offer[];
   reviews: Review[];
+  onCommentPost: (rating: number, text: string) => void;
 }
 
-function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element{
+function OfferScreen({offers, reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
   const location = useLocation();
   const parseLocation = location.pathname.split('/')?.at(-1);
@@ -43,7 +44,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element{
       <Header />
 
       <main className="page__main page__main--offer">
-        <OfferFullCard offer={offer} offerReviews={offerReviews}/>
+        <OfferFullCard offer={offer} offerReviews={offerReviews} onCommentPost={onCommentPost}/>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>

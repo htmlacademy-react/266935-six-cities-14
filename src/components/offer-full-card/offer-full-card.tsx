@@ -9,9 +9,10 @@ import PostReviewForm from '../post-review-form/post-review-form';
 type OfferCardProps= {
     offer: Offer;
     offerReviews: Review[];
+    onCommentPost: (rating: number, text: string) => void;
   }
 
-function OfferFullCard({offer, offerReviews}: OfferCardProps): JSX.Element {
+function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JSX.Element {
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
@@ -122,7 +123,7 @@ function OfferFullCard({offer, offerReviews}: OfferCardProps): JSX.Element {
               ))}
 
             </ul>
-            <PostReviewForm />
+            <PostReviewForm onCommentPost = {onCommentPost}/>
           </section>
         </div>
       </div>

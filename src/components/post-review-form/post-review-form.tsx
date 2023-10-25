@@ -1,15 +1,23 @@
 import React from 'react';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent,FormEvent } from 'react';
 
-function PostReviewForm(): JSX.Element {
+type PostReviewFormProps = {
+  onCommentPost: (rating: number, text: string) => void;
+}
+
+function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
 
   const [selectedRating, setSelectedRating] = useState(0);
   const [textReview, setTextReview] = useState('');
-  console.log(selectedRating);
-  console.log(textReview);
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      onSubmit={(evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        onCommentPost(selectedRating, textReview);
+      }}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {[5,4,3,2,1].map((number) => (
@@ -42,7 +50,7 @@ function PostReviewForm(): JSX.Element {
         <p className="reviews__help">
       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit">Submit</button>
       </div>
     </form>
   );

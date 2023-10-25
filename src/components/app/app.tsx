@@ -53,7 +53,15 @@ function App({offerCardsCount, offers, reviews}: AppScreenProps): JSX.Element {
           />
           <Route
             path = {`${AppRoute.Offer}/:offerId`}
-            element = {<OfferScreen offers={offers} reviews={reviews}/>}
+            element = {
+              <OfferScreen
+                offers={offers}
+                reviews={reviews}
+                onCommentPost = {(rating: number, text: string): void => {
+                  console.log(rating, text);
+                }}
+              />
+            }
           />
           <Route
             path = "*"
