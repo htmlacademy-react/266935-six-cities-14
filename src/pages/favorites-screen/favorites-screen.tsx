@@ -9,11 +9,6 @@ type FavoriteScreenProps = {
   offers: Offer[];
 }
 
-type GroupedOffers = {
-  city: string;
-  offers: Offer[];
-}
-
 function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
 
   const sortedFavoriteOffers = offers.filter((offer) => offer.isFavorite)

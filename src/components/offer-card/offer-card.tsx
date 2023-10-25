@@ -1,5 +1,8 @@
 import { Offer } from '../../types/offer';
 
+import { AppRoute } from '../../const';
+import {Link} from 'react-router-dom';
+
 
 type OfferCardProps= {
   offerCardType: 'mainScreen'|'favoritesScreen';
@@ -109,11 +112,9 @@ function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: O
         <h2
           className="place-card__name"
         >
-          <a
-            href="#"
-          >
+          <Link className="header__logo-link" to={`${AppRoute.Offer}/${offer.id}`}>
             {offer.title}
-          </a>
+          </Link>
         </h2>
         <p
           className="place-card__type"

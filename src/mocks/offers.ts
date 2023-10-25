@@ -29,7 +29,7 @@ export const offers: Offer[] = [
     ],
     title: 'Waterfront with extraordinary view',
     isFavorite: true,
-    isPremium: false,
+    isPremium: true,
     rating: 4.8,
     type: 'room',
     bedrooms: 1,

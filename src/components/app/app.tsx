@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
 
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -16,9 +17,10 @@ import PrivateRoute from '../private-route/private-route';
 type AppScreenProps = {
   offerCardsCount: number;
   offers: Offer[];
+  reviews: Review[];
 }
 
-function App({offerCardsCount, offers}: AppScreenProps): JSX.Element {
+function App({offerCardsCount, offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -51,7 +53,7 @@ function App({offerCardsCount, offers}: AppScreenProps): JSX.Element {
           />
           <Route
             path = {`${AppRoute.Offer}/:offerId`}
-            element = {<OfferScreen />}
+            element = {<OfferScreen offers={offers} reviews={reviews}/>}
           />
           <Route
             path = "*"
