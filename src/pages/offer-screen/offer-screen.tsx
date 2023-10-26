@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Header from '../../components/header/header';
 import OfferFullCard from '../../components/offer-full-card/offer-full-card';
@@ -10,7 +10,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
-type OfferScreenProps= {
+type OfferScreenProps = {
   offers: Offer[];
   reviews: Review[];
   onCommentPost: (rating: number, text: string) => void;
@@ -18,12 +18,11 @@ type OfferScreenProps= {
 
 function OfferScreen({offers, reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
-  const location = useLocation();
-  const parseLocation = location.pathname.split('/')?.at(-1);
+  const params = useParams();
   let offerNumber: number = 0;
 
-  if (parseLocation !== undefined){
-    offerNumber = parseInt(parseLocation, 10);
+  if (params.offerId !== undefined){
+    offerNumber = parseInt(params.offerId, 10);
   }
 
   const offer = offers.find((offersItem) => offersItem.id === offerNumber);
