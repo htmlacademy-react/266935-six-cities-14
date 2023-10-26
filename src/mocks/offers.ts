@@ -28,8 +28,8 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/5.jpg'
     ],
     title: 'Waterfront with extraordinary view',
-    isFavorite: false,
-    isPremium: true,
+    isFavorite: true,
+    isPremium: false,
     rating: 4.8,
     type: 'room',
     bedrooms: 1,
@@ -80,8 +80,8 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/13.jpg'
     ],
     title: 'House in countryside',
-    isFavorite: false,
-    isPremium: false,
+    isFavorite: true,
+    isPremium: true,
     rating: 2.8,
     type: 'room',
     bedrooms: 1,
@@ -193,7 +193,7 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/5.jpg'
     ],
     title: 'Nice, cozy, warm big bed apartment',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 3.2,
     type: 'hotel',

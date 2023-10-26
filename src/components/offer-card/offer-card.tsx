@@ -32,7 +32,7 @@ function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: O
       onMouseEnter={() => handleMouseEnter(offer.id)}
       onMouseLeave={() => handleMouseLeave()}
     >
-      {offer.isFavorite ?
+      {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : ''}
