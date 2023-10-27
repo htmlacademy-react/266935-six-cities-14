@@ -2,7 +2,7 @@ import { Offer } from '../../types/offer';
 
 import OfferCard from '../offer-card/offer-card';
 
-import {useState} from 'react';
+import {useState, Fragment} from 'react';
 
 type OffersListProps= {
     offerCardType: 'mainScreen'|'favoritesScreen';
@@ -25,7 +25,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
   }
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <Fragment>
       {offers.slice(0, offerCardCount).map((offer) => (
         <OfferCard
           offerCardType={offerCardType}
@@ -34,7 +34,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
           handleMouseEnter = {handleMouseEnter}
           handleMouseLeave = {handleMouseLeave}
         />))}
-    </div>
+    </Fragment>
   );
 }
 

@@ -85,7 +85,9 @@ function MainScreen({offerCardsCount, offers}: MainScreenProps): JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <OffersList offerCardCount = {offerCardsCount} offers = {offers} offerCardType='mainScreen'/>
+                <div className="cities__places-list places__list tabs__content">
+                  <OffersList offerCardCount = {offerCardsCount} offers = {offers} offerCardType='mainScreen'/>
+                </div>
               </section>
             )}
 
