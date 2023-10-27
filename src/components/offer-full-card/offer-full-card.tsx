@@ -17,8 +17,8 @@ function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JS
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {offer.images.slice(0, Setting.FullOfferPhotosCount).map((image, index) => (
-            <div className="offer__image-wrapper" key={index}>
+          {offer.images.slice(0, Setting.FullOfferPhotosCount).map((image) => (
+            <div className="offer__image-wrapper" key={image}>
               <img className="offer__image" src={image} alt="Photo studio" />
             </div>
           ))}
@@ -66,8 +66,8 @@ function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JS
           <div className="offer__inside">
             <h2 className="offer__inside-title">What&apos;s inside</h2>
             <ul className="offer__inside-list">
-              {offer.goods.map((good, index)=>(
-                <li className="offer__inside-item" key={index}>
+              {offer.goods.map((good)=>(
+                <li className="offer__inside-item" key={good}>
                   {good}
                 </li>
               ))}

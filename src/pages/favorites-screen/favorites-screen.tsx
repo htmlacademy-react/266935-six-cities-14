@@ -43,8 +43,8 @@ function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                {cities.map((city, index) => (
-                  <li className="favorites__locations-items" key={index}>
+                {cities.map((city) => (
+                  <li className="favorites__locations-items" key={city}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
                         <a className="locations__item-link" href="#">
