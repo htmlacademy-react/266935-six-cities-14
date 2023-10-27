@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 import { useState, ChangeEvent,FormEvent } from 'react';
 
 type PostReviewFormProps = {
@@ -21,7 +21,7 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {[5,4,3,2,1].map((number) => (
-          <React.Fragment key={number}>
+          <Fragment key={number}>
             <input className="form__rating-input visually-hidden" name="rating" value={number} id={`${number}-stars`} type="radio"
               onChange={() => {
                 setSelectedRating(number);
@@ -32,7 +32,7 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
                 <use xlinkHref="#icon-star"></use>
               </svg>
             </label>
-          </React.Fragment>
+          </Fragment>
         ))}
 
       </div>
