@@ -8,11 +8,19 @@ import {Link} from 'react-router-dom';
 type OfferCardProps= {
   offerCardType: 'mainScreen'|'favoritesScreen';
   offer: Offer;
-  handleMouseEnter: (offerId: number) => void;
-  handleMouseLeave: () => void;
+  handleMouseMove?: (offerId: Offer['id'] | null) => void;
 }
 
-function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: OfferCardProps): JSX.Element {
+function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
+
+  const handleMouseEnter = () => {
+    handleMouseMove?.(offer.id);
+  };
+
+  const handleMouseLeave = () => {
+    handleMouseMove?.(null);
+  };
+
   const options = {
     mainScreen: {
       className: 'cities',
@@ -29,8 +37,8 @@ function OfferCard({offerCardType, offer, handleMouseEnter, handleMouseLeave}: O
   return (
     <article
       className={`${options[offerCardType].className}__card place-card`}
-      onMouseEnter={() => handleMouseEnter(offer.id)}
-      onMouseLeave={() => handleMouseLeave()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {offer.isPremium ?
         <div className="place-card__mark">

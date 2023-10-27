@@ -4,7 +4,7 @@ import { Offer } from '../../types/offer';
 
 import FooterLogo from '../../components/footer-logo/footer-logo';
 import Header from '../../components/header/header';
-import OffersList from '../../components/offers-list/offers-list';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type FavoriteScreenProps = {
   offers: Offer[];
@@ -53,11 +53,10 @@ function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      <OffersList
-                        offerCardCount={favoriteOffers.filter((offer) => offer.city.name === city).length}
-                        offers={favoriteOffers.filter((offer) => offer.city.name === city)}
-                        offerCardType='favoritesScreen'
-                      />
+                      {favoriteOffers.filter((offer) => offer.city.name === city)
+                        .map((offer) => (
+                          <OfferCard offer={offer} offerCardType='favoritesScreen' key={offer.id}/>
+                        ))}
                     </div>
                   </li>
                 ))}
