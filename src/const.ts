@@ -1,5 +1,6 @@
 export const Setting = {
-  OfferCardsCount: 6
+  OfferCardsCount: 4,
+  FullOfferPhotosCount: 6
 };
 
 export enum AppRoute {
