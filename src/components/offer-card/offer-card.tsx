@@ -25,12 +25,12 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
     mainScreen: {
       className: 'cities',
       width: '260',
-      hight: '200',
+      height: '200',
     },
     favoritesScreen: {
       className: 'favorites',
       width: '150',
-      hight: '110',
+      height: '110',
     }
   };
 
@@ -53,7 +53,7 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
             className="place-card__image"
             src={offer.previewImage}
             width={`${options[offerCardType].width}`}
-            height={`${options[offerCardType].hight}`}
+            height={`${options[offerCardType].height}`}
             alt="Place image"
           />
         </a>
