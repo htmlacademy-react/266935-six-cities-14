@@ -53,7 +53,7 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
             className="place-card__image"
             src={offer.previewImage}
             width={`${options[offerCardType].width}`}
-            height={`${options[offerCardType].hight}`}
+            height={`${options[offerCardType].height}`}
             alt="Place image"
           />
         </a>

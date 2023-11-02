@@ -1,4 +1,5 @@
 import { Offer } from '../../types/offer';
+import Map from '../map/map';
 
 import OfferCard from '../offer-card/offer-card';
 
@@ -49,7 +50,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
         </div>
       </section>
       <div className="cities__right-section">
-        <section className="cities__map map">{selectedOfferCardId}</section>
+        <Map />
       </div>
     </Fragment>
 
