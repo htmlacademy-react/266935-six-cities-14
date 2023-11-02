@@ -1,8 +1,10 @@
 import { Setting } from '../../const';
-import { convertRating, formatDate } from '../../utils';
+import { convertRating } from '../../utils';
 
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+
+import ReviewsList from '../reviews-list/reviews-list';
 
 import PostReviewForm from '../post-review-form/post-review-form';
 
@@ -94,35 +96,8 @@ function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JS
             </div>
           </div>
           <section className="offer__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-            <ul className="reviews__list">
-              {offerReviews.map((offerReview) => (
-                <li className="reviews__item" key={offerReview.user.id}>
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img className="reviews__avatar user__avatar" src={offerReview.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
-                    </div>
-                    <span className="reviews__user-name">
-                      {offerReview.user.name}
-                    </span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating" >
-                      <div className="reviews__stars rating__stars">
-                        <span style={{ width: convertRating(offerReview.rating) }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <p className="reviews__text">
-                      {offerReview.comment}
-                    </p><time className="reviews__time" dateTime={offerReview.date}>{formatDate(offerReview.date)}</time>
-
-
-                  </div>
-                </li>
-              ))}
-
-            </ul>
+            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span></h2>
+            <ReviewsList offerReviews={offerReviews}/>
             <PostReviewForm onCommentPost = {onCommentPost}/>
           </section>
         </div>
