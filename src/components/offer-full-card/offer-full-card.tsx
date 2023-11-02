@@ -4,7 +4,7 @@ import { convertRating } from '../../utils';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
-import ReviewsList from '../reviews-list/reviews-list';
+import OfferReviewsList from '../offer-reviews-list/offer-reviews-list';
 
 import PostReviewForm from '../post-review-form/post-review-form';
 
@@ -97,7 +97,7 @@ function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JS
           </div>
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span></h2>
-            <ReviewsList offerReviews={offerReviews}/>
+            <OfferReviewsList offerReviews={offerReviews}/>
             <PostReviewForm onCommentPost = {onCommentPost}/>
           </section>
         </div>
