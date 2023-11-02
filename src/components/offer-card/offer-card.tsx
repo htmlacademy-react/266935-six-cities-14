@@ -25,12 +25,12 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
     mainScreen: {
       className: 'cities',
       width: '260',
-      hight: '200',
+      height: '200',
     },
     favoritesScreen: {
       className: 'favorites',
       width: '150',
-      hight: '110',
+      height: '110',
     }
   };
 
