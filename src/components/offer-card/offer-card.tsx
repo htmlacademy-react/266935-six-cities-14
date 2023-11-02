@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 
 type OfferCardProps= {
-  offerCardType: 'mainScreen'|'favoritesScreen';
+  offerCardType: 'mainScreen' | 'favoritesScreen' | 'offerScreen';
   offer: Offer;
   handleMouseMove?: (offerId: Offer['id'] | null) => void;
 }
@@ -31,6 +31,11 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
       className: 'favorites',
       width: '150',
       height: '110',
+    },
+    offerScreen: {
+      className: 'near-places',
+      width: '260',
+      height:'200',
     }
   };
 
@@ -40,15 +45,15 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {offer.isPremium ?
+      {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : ''}
+        </div>}
 
       <div
         className={`${options[offerCardType].className}__image-wrapper place-card__image-wrapper`}
       >
-        <a href="#">
+        <Link className="header__logo-link" to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -56,7 +61,7 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
             height={`${options[offerCardType].height}`}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div
         className={`${offerCardType === 'favoritesScreen' ? 'favorites__card-info' : ''} place-card__info`}

@@ -1,6 +1,8 @@
 import { Setting } from '../../const';
 import { convertRating } from '../../utils';
 
+import {Fragment} from 'react';
+
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
@@ -14,9 +16,9 @@ type OfferCardProps= {
     onCommentPost: (rating: number, text: string) => void;
   }
 
-function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JSX.Element {
+function OfferFullCard({ offer, offerReviews, onCommentPost} : OfferCardProps): JSX.Element {
   return (
-    <section className="offer">
+    <Fragment>
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
           {offer.images.slice(0, Setting.FullOfferPhotosCount).map((image) => (
@@ -102,8 +104,7 @@ function OfferFullCard({offer, offerReviews, onCommentPost}: OfferCardProps): JS
           </section>
         </div>
       </div>
-      <section className="offer__map map"></section>
-    </section>
+    </Fragment>
   );
 }
 
