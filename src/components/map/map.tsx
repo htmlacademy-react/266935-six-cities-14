@@ -10,6 +10,7 @@ import useMap from '../../hooks/use-map';
 type MapProps = {
     city: City;
     offers: Offer[];
+    selectedOfferCardId: Offer['id'] | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,21 +25,34 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, offers} : MapProps): JSX.Element {
+function Map({city, offers, selectedOfferCardId} : MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude
-        }).addTo(map);
+        });
+
+        marker
+          .setIcon(
+            selectedOfferCardId !== undefined && offer.id === selectedOfferCardId
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
+          .addTo(markerLayer);
 
       });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
-  },[map, offers]);
+  },[map, offers, selectedOfferCardId]);
 
   return (
     <section

@@ -51,7 +51,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city = {Cities[0]} offers={offers}/>
+        <Map city = {Cities[0]} offers={offers} selectedOfferCardId = {selectedOfferCardId}/>
       </div>
     </Fragment>
 
