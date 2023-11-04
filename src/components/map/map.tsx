@@ -11,6 +11,7 @@ type MapProps = {
     city: City;
     offers: Offer[];
     selectedOfferCardId: Offer['id'] | null;
+    mapType: 'cities' | 'offer';
 };
 
 const defaultCustomIcon = new Icon({
@@ -25,13 +26,20 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, offers, selectedOfferCardId} : MapProps): JSX.Element {
+function Map({city, offers, selectedOfferCardId, mapType} : MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  }, [map, city]);
+
+  useEffect(() => {
+    if (map) {
       const markerLayer = layerGroup().addTo(map);
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -56,9 +64,15 @@ function Map({city, offers, selectedOfferCardId} : MapProps): JSX.Element {
 
   return (
     <section
-      className="cities__map map"
-      style={{height: '500px'}}
+      className={`${mapType}__map map`}
       ref={mapRef}
+      style={{
+        height: '100%',
+        minHeight: '500px',
+        width: '100%',
+        maxWidth: '1144px',
+        margin: '0 auto',
+      }}
     >
 
     </section>

@@ -24,7 +24,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
     <Fragment>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">312 places to stay in Amsterdam</b>
+        <b className="places__found">{offers.length} places to stay in Amsterdam</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -51,7 +51,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city = {Cities[0]} offers={offers} selectedOfferCardId = {selectedOfferCardId}/>
+        <Map city = {Cities[0]} offers={offers} selectedOfferCardId = {selectedOfferCardId} mapType='cities'/>
       </div>
     </Fragment>
 
