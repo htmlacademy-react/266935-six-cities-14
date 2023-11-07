@@ -5,18 +5,16 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import CitiesList from '../../components/cities-list/cities-list';
+import { fillOffers } from '../../store/action';
 
-import { Offer } from '../../types/offer';
 
-type MainScreenProps= {
-  offerCardsCount: number;
-  offers: Offer[];
-}
-
-function MainScreen({offerCardsCount, offers}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const city = useAppSelector((state) => state.city);
-
   const dispatch = useAppDispatch();
+
+  dispatch(fillOffers());
+
+  const offers = useAppSelector((state) => state.offers);
 
   return (
     <div className="page page--gray page--main">
@@ -41,7 +39,7 @@ function MainScreen({offerCardsCount, offers}: MainScreenProps): JSX.Element {
                 </div>
               </section>
             ) : (
-              <OffersList offerCardCount = {offerCardsCount} offers = {offers} offerCardType='mainScreen'/>
+              <OffersList offers = {offers} offerCardType='mainScreen' selectedCity={city}/>
             )}
           </div>
         </div>

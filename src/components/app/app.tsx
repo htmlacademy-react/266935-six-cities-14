@@ -15,19 +15,18 @@ import PrivateRoute from '../private-route/private-route';
 
 
 type AppScreenProps = {
-  offerCardsCount: number;
   offers: Offer[];
   reviews: Review[];
 }
 
-function App({offerCardsCount, offers, reviews}: AppScreenProps): JSX.Element {
+function App({ offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path = {AppRoute.Root}
-            element = {<MainScreen offerCardsCount={offerCardsCount} offers = {offers}/>}
+            element = {<MainScreen />}
           />
           <Route
             path = {AppRoute.Login}

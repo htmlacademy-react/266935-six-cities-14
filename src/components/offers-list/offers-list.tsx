@@ -8,11 +8,11 @@ import {useState, Fragment} from 'react';
 
 type OffersListProps= {
     offerCardType: 'mainScreen'|'favoritesScreen';
-    offerCardCount: number;
     offers: Offer[];
+    selectedCity: string;
   }
 
-function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): JSX.Element {
+function OffersList({offerCardType, offers, selectedCity}: OffersListProps): JSX.Element {
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<Offer['id'] | null>(null);
 
@@ -20,11 +20,16 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
     setSelectedOfferCardId(offerId);
   }
 
+  const offersInSelectedCity = offers.filter((offer) => offer.city.name === selectedCity);
+
+  const cityForMap = Cities.find((city) => city.name === selectedCity);
+
+
   return (
     <Fragment>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+        <b className="places__found">{offersInSelectedCity.length} places to stay in {selectedCity}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -41,7 +46,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">
-          {offers.slice(0, offerCardCount).map((offer) => (
+          {offersInSelectedCity.map((offer) => (
             <OfferCard
               offerCardType={offerCardType}
               key={offer.id}
@@ -51,7 +56,7 @@ function OffersList({offerCardType, offerCardCount, offers}: OffersListProps): J
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city = {Cities[0]} offers={offers} selectedOfferCardId = {selectedOfferCardId} mapType='cities'/>
+        <Map city = {cityForMap} offers={offers} selectedOfferCardId = {selectedOfferCardId} mapType='cities'/>
       </div>
     </Fragment>
 

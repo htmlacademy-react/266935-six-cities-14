@@ -5,13 +5,14 @@ import { Cities } from '../const';
 
 import { Offer } from '../types/offer';
 
+
 type initialStateType = {
     city: string;
     offers: Offer[];
 };
 
 const initialState: initialStateType = {
-  city: Cities.Amsterdam,
+  city: Cities.Paris,
   offers: [],
 };
 

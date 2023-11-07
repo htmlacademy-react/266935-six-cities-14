@@ -1,5 +1,4 @@
 export const Setting = {
-  OfferCardsCount: 4,
   FullOfferPhotosCount: 6
 };
 
