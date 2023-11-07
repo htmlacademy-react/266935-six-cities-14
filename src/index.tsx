@@ -4,9 +4,6 @@ import {Provider} from 'react-redux';
 
 import App from './components/app/app';
 
-import { Setting } from './const';
-
-import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import {store} from './store';
 
@@ -18,8 +15,6 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       <App
-        offerCardsCount={Setting.OfferCardsCount}
-        offers = {offers}
         reviews = {reviews}
       />
     </Provider>

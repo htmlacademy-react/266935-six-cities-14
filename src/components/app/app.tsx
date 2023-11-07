@@ -3,7 +3,6 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import {AppRoute, AuthorizationStatus} from '../../const';
 
-import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -15,11 +14,10 @@ import PrivateRoute from '../private-route/private-route';
 
 
 type AppScreenProps = {
-  offers: Offer[];
   reviews: Review[];
 }
 
-function App({ offers, reviews}: AppScreenProps): JSX.Element {
+function App({reviews}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -46,7 +44,7 @@ function App({ offers, reviews}: AppScreenProps): JSX.Element {
                 restrictedFor={AuthorizationStatus.Auth}
                 redirectTo={AppRoute.Login}
               >
-                <FavoritesScreen offers = {offers} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />
@@ -54,7 +52,6 @@ function App({ offers, reviews}: AppScreenProps): JSX.Element {
             path = {`${AppRoute.Offer}/:offerId`}
             element = {
               <OfferScreen
-                offers={offers}
                 reviews={reviews}
                 onCommentPost = {(rating: number, text: string): void => {
                   console.log(rating, text);

@@ -28,7 +28,7 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/10.jpg'
     ],
     'title': 'Waterfront with extraordinary view',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 4,
     'type': 'house',
@@ -135,7 +135,7 @@ export const offers: Offer[] = [
       'https://14.react.pages.academy/static/offer/2.jpg'
     ],
     'title': 'Penthouse, 4-5 rooms + 5 balconies',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 3.4,
     'type': 'apartment',
