@@ -23,7 +23,11 @@ function OffersList({offerCardType, offers, selectedCity}: OffersListProps): JSX
 
   const offersInSelectedCity = offers.filter((offer) => offer.city.name === selectedCity);
 
-  const cityForMap = Cities.find((city) => city.name === selectedCity);
+  let cityForMap = Cities.find((city) => city.name === selectedCity);
+
+  if(cityForMap === undefined) {
+    cityForMap = Cities[0];
+  }
 
 
   return (
