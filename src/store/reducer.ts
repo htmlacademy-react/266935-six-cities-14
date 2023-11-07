@@ -18,7 +18,9 @@ const initialState: initialStateType = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
-      state.city = action.city;
+      const {city} = action.payload;
+
+      state.city = city;
     })
     .addCase(fillOffers, (state) => {
       state.offers = offers;
