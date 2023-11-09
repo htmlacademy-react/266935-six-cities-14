@@ -49,7 +49,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
             }
           />
           <Route
-            path = {`${AppRoute.Offer}/:offerId`}
+            path = {`${AppRoute.SelectedOffer}/:offerId`}
             element = {
               <OfferScreen
                 reviews={reviews}
