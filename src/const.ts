@@ -1,6 +1,14 @@
 export const Setting = {
-  OfferCardsCount: 4,
   FullOfferPhotosCount: 6
+};
+
+export const Cities = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
 };
 
 export enum AppRoute {

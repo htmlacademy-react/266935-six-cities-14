@@ -11,16 +11,22 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fillOffers } from '../../store/action';
 
 type OfferScreenProps = {
-  offers: Offer[];
   reviews: Review[];
   onCommentPost: (rating: number, text: string) => void;
 }
 
-function OfferScreen({offers, reviews, onCommentPost}: OfferScreenProps): JSX.Element{
+function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<Offer['id'] | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  dispatch(fillOffers());
+  const offers = useAppSelector((state) => state.offers);
   function handleMouseMove(offerId: Offer['id'] | null){
     setSelectedOfferCardId(offerId);
   }
