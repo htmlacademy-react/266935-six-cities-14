@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, Cities } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {changeCity} from '../../store/action.ts';
 
-type CitiesListProps = {
-  selectedCity: string;
-  onCityChange: (city: string) => void;
-}
-
-function CitiesList({selectedCity, onCityChange}: CitiesListProps): JSX.Element {
+function CitiesList(): JSX.Element {
+  const selectedCity = useAppSelector((state) => state.city);
+  const dispatch = useAppDispatch();
 
   return (
     <section className="locations container" >
@@ -17,7 +16,7 @@ function CitiesList({selectedCity, onCityChange}: CitiesListProps): JSX.Element 
               className={`${selectedCity === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}`}
               onClick={(evt) => {
                 evt.preventDefault();
-                onCityChange(evt.target.textContent);
+                dispatch(changeCity({city}));
               }}
             >
               <span>{city}</span>
