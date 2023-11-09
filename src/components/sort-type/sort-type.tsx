@@ -49,7 +49,7 @@ function SortType({sortTypeSetting, setSortType}: SortTypeProps): JSX.Element {
           'places__options places__options--custom places__options--opened' :
           'places__options places__options--custom'}`}
       >
-        {Object.entries(SortTypesSetting).map(([objKey, value]) => (
+        {(Object.keys(SortTypesSetting) as SortTypes[]).map((objKey) => (
           <li
             className={`${sortTypeSetting === objKey ? 'places__option places__option--active' : 'places__option' }`}
             tabIndex={0}
@@ -59,7 +59,7 @@ function SortType({sortTypeSetting, setSortType}: SortTypeProps): JSX.Element {
               setSortListVisible(!sortListVisible);
             }}
           >
-            {value}
+            {SortTypesSetting[objKey]}
           </li>
         ))}
       </ul>
