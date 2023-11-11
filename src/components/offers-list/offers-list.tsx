@@ -1,5 +1,7 @@
 import { Offer } from '../../types/offer';
 import { Cities } from '../../mocks/city';
+import { SortCallbacks } from '../../const';
+import { SortTypes } from '../../types/sort-types';
 import Map from '../map/map';
 
 import OfferCard from '../offer-card/offer-card';
@@ -15,6 +17,7 @@ type OffersListProps= {
 function OffersList({offerCardType}: OffersListProps): JSX.Element {
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<Offer['id'] | null>(null);
+  const [sortTypeSetting, setSortType] = useState<SortTypes>('DefaultSort');
 
   const selectedCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
@@ -24,6 +27,7 @@ function OffersList({offerCardType}: OffersListProps): JSX.Element {
   }
 
   const offersInSelectedCity = offers.filter((offer) => offer.city.name === selectedCity);
+  offersInSelectedCity.sort(SortCallbacks[sortTypeSetting]);
 
   let cityForMap = Cities.find((city) => city.name === selectedCity);
 
@@ -45,7 +49,7 @@ function OffersList({offerCardType}: OffersListProps): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{offersInSelectedCity.length} places to stay in {selectedCity}</b>
-            <SortType />
+            <SortType sortTypeSetting = {sortTypeSetting} setSortType = {setSortType}/>
             <div className="cities__places-list places__list tabs__content">
               {offersInSelectedCity.map((offer) => (
                 <OfferCard
