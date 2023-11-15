@@ -8,6 +8,8 @@ export const fillOffers = createAction('main/fillOffers');
 
 export const loadOffers = createAction<Offer[]>('data/loadOffers');
 
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setError = createAction<string | null>('main/setError');
