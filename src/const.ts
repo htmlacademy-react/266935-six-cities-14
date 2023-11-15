@@ -1,6 +1,8 @@
 import { SortTypesSettingItem } from './types/sort-types';
 import { Offer } from './types/offer';
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export const Setting = {
   FullOfferPhotosCount: 6
 };
@@ -19,6 +21,12 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   SelectedOffer = '/offer',
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {

@@ -1,10 +1,14 @@
-import { Host } from './offer';
-
 export type Review = {
-    id: number;
-    user: Host;
+    id: string;
+    user: User;
     rating: number;
     comment: string;
     date: string;
+}
+
+export type User = {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
 }
 

@@ -3,14 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import FooterLogo from '../../components/footer-logo/footer-logo';
 import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fillOffers } from '../../store/action';
+import { useAppSelector } from '../../hooks';
+
 
 
 function FavoritesScreen(): JSX.Element {
-  const dispatch = useAppDispatch();
 
-  dispatch(fillOffers());
   const offers = useAppSelector((state) => state.offers);
 
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);

@@ -1,6 +1,6 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-
+import { useAppSelector } from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 import { Review } from '../../types/review';
@@ -11,6 +11,7 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 
 type AppScreenProps = {
@@ -18,6 +19,15 @@ type AppScreenProps = {
 }
 
 function App({reviews}: AppScreenProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -30,7 +40,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
             path = {AppRoute.Login}
             element = {
               <PrivateRoute
-                restrictedFor={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Root}
               >
                 <LoginScreen />
@@ -41,7 +51,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
             path = {AppRoute.Favorites}
             element = {
               <PrivateRoute
-                restrictedFor={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Login}
               >
                 <FavoritesScreen />
