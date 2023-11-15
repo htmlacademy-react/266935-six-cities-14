@@ -1,6 +1,8 @@
 import { SortTypesSettingItem } from './types/sort-types';
 import { Offer } from './types/offer';
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export const Setting = {
   FullOfferPhotosCount: 6
 };
