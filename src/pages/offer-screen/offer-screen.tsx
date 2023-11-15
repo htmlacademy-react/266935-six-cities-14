@@ -9,10 +9,9 @@ import OfferCard from '../../components/offer-card/offer-card';
 
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-import { Offer } from '../../types/offer';
+import { FullOffer, Offer } from '../../types/offer';
 import { Review } from '../../types/review';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fillOffers } from '../../store/action';
+import { useAppSelector } from '../../hooks';
 
 type OfferScreenProps = {
   reviews: Review[];
@@ -21,24 +20,21 @@ type OfferScreenProps = {
 
 function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
-  const [selectedOfferCardId, setSelectedOfferCardId] = useState<Offer['id'] | null>(null);
+  const [selectedOfferCardId, setSelectedOfferCardId] = useState<FullOffer['id'] | null>(null);
 
-  const dispatch = useAppDispatch();
-
-  dispatch(fillOffers());
   const offers = useAppSelector((state) => state.offers);
-  function handleMouseMove(offerId: Offer['id'] | null){
+  function handleMouseMove(offerId: FullOffer['id'] | null){
     setSelectedOfferCardId(offerId);
   }
 
   const params = useParams();
-  let offerNumber: number = 0;
+  let offerStringId: string = '';
 
   if (params.offerId !== undefined){
-    offerNumber = parseInt(params.offerId, 10);
+    offerStringId = params.offerId;
   }
 
-  const selectedOffer = offers.find((offersItem) => offersItem.id === offerNumber);
+  const selectedOffer = offers.find((offersItem) => offersItem.id === offerStringId);
 
   if (selectedOffer === undefined) {
     return (
@@ -46,7 +42,7 @@ function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
     );
   }
   const nearOffers: Offer[] = offers.filter((offer) => offer.id !== selectedOffer.id);
-  const offerReviews = reviews.filter((review) => review.id === offerNumber);
+  const offerReviews = reviews.filter((review) => review.id === selectedOffer.id);
 
   return (
     <div className="page">
