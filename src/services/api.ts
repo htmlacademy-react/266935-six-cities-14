@@ -1,7 +1,7 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
+import axios, {AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig} from 'axios';
 import { StatusCodes } from 'http-status-codes';
+import {toast} from 'react-toastify';
 import { getToken } from './token';
-import { processErrorHandle } from './process-error-handle';
 
 type DetailMessageType = {
     type: string;
@@ -26,7 +26,7 @@ export const createAPI = (): AxiosInstance => {
   });
 
   api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig) => {
       const token = getToken();
 
       if (token && config.headers) {
@@ -43,7 +43,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        processErrorHandle(detailMessage.message);
+        toast.warn(detailMessage.message);
       }
 
       throw error;
