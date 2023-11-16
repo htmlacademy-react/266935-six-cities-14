@@ -1,9 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
+import {Link} from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 
@@ -12,7 +13,7 @@ function LoginScreen(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const selectedCity = useAppSelector((state) => state.city);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -72,7 +73,6 @@ function LoginScreen(): JSX.Element {
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                onClick={() => navigate(AppRoute.Root)}
               >
                 Sign in
               </button>
@@ -80,9 +80,9 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Root}>
+                <span>{selectedCity}</span>
+              </Link>
             </div>
           </section>
         </div>
