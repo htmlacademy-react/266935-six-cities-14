@@ -3,20 +3,21 @@ import { convertRating } from '../../utils';
 
 import {Fragment} from 'react';
 
-import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { FullOffer } from '../../types/offer';
 
 import OfferReviewsList from '../offer-reviews-list/offer-reviews-list';
 
 import PostReviewForm from '../post-review-form/post-review-form';
+import { useAppSelector } from '../../hooks';
 
 type OfferCardProps= {
-    offer: Offer;
-    offerReviews: Review[];
     onCommentPost: (rating: number, text: string) => void;
   }
 
-function OfferFullCard({ offer, offerReviews, onCommentPost} : OfferCardProps): JSX.Element {
+function OfferFullCard({ onCommentPost} : OfferCardProps): JSX.Element {
+
+  const offer: FullOffer = useAppSelector((state) => state.fullOffer);
+
   return (
     <Fragment>
       <div className="offer__gallery-container container">
@@ -99,7 +100,7 @@ function OfferFullCard({ offer, offerReviews, onCommentPost} : OfferCardProps): 
           </div>
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span></h2>
-            <OfferReviewsList offerReviews={offerReviews}/>
+            <OfferReviewsList/>
             <PostReviewForm onCommentPost = {onCommentPost}/>
           </section>
         </div>
