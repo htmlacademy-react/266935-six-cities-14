@@ -10,6 +10,8 @@ import { Fragment } from 'react';
 function Header(): JSX.Element {
 
   const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authUserData = useAppSelector((state) => state.authUserData);
+  const favoriteOffersCount = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite).length;
   const dispatch = useAppDispatch();
 
   return (
@@ -24,9 +26,14 @@ function Header(): JSX.Element {
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
+                        <img
+                          className="header__avatar user__avatar"
+                          src={authUserData.avatarUrl}
+                          alt="avatar"
+                        />
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__user-name user__name">{authUserData.email}</span>
+                      <span className="header__favorite-count">{favoriteOffersCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
