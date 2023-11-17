@@ -1,4 +1,4 @@
-import { Setting } from '../../const';
+import { AuthorizationStatus, Setting } from '../../const';
 import { convertRating } from '../../utils';
 
 import {Fragment} from 'react';
@@ -9,6 +9,7 @@ import OfferReviewsList from '../offer-reviews-list/offer-reviews-list';
 
 import PostReviewForm from '../post-review-form/post-review-form';
 import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks';
 
 type OfferFullCardProps = {
   fullOffer: FullOffer;
@@ -16,7 +17,7 @@ type OfferFullCardProps = {
 }
 
 function OfferFullCard({fullOffer, reviews}: OfferFullCardProps): JSX.Element {
-
+  const authorizationStatus: AuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <Fragment>
       <div className="offer__gallery-container container">
@@ -100,7 +101,7 @@ function OfferFullCard({fullOffer, reviews}: OfferFullCardProps): JSX.Element {
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
             <OfferReviewsList offerReviews={reviews}/>
-            <PostReviewForm/>
+            {authorizationStatus === AuthorizationStatus.Auth ? <PostReviewForm/> : ''}
           </section>
         </div>
       </div>
