@@ -9,40 +9,42 @@ import OfferCard from '../../components/offer-card/offer-card';
 
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-import { FullOffer, Offer } from '../../types/offer';
+import { CitiesForMap } from '../../const';
+import { City, FullOffer, Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+
 import { useAppSelector } from '../../hooks';
 
-type OfferScreenProps = {
-  reviews: Review[];
-  onCommentPost: (rating: number, text: string) => void;
-}
 
-function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
+function OfferScreen(): JSX.Element{
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<FullOffer['id'] | null>(null);
 
-  const offers = useAppSelector((state) => state.offers);
+  const params = useParams();
+  let offerIdFromURI: string = '';
+
+  if (params.offerId !== undefined){
+    offerIdFromURI = params.offerId;
+  }
+
+  const offers: Offer[] = useAppSelector((state) => state.offers);
+  const nearbyOffers: Offer[] = useAppSelector((state) => state.nearbyOffers);
+  const fullOffer: FullOffer = useAppSelector((state) => state.fullOffer);
+  const reviews: Review[] = useAppSelector((state) => state.reviews);
+  const selectedCity: string = useAppSelector((state) => state.city);
+
+  const cityForMap: City = CitiesForMap.find((city) => city.name === selectedCity) ?? CitiesForMap[0];
+  const offerFromURI = offers.find((offer) => offer.id === offerIdFromURI);
+
   function handleMouseMove(offerId: FullOffer['id'] | null){
     setSelectedOfferCardId(offerId);
   }
 
-  const params = useParams();
-  let offerStringId: string = '';
-
-  if (params.offerId !== undefined){
-    offerStringId = params.offerId;
-  }
-
-  const selectedOffer = offers.find((offersItem) => offersItem.id === offerStringId);
-
-  if (selectedOffer === undefined) {
+  if (!(fullOffer && offerFromURI)) {
     return (
       <NotFoundScreen />
     );
   }
-  const nearOffers: Offer[] = offers.filter((offer) => offer.id !== selectedOffer.id);
-  const offerReviews = reviews.filter((review) => review.id === selectedOffer.id);
 
   return (
     <div className="page">
@@ -54,14 +56,22 @@ function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferFullCard offer={selectedOffer} offerReviews={offerReviews} onCommentPost={onCommentPost}/>
-          <Map offers={nearOffers} city = {selectedOffer.city} selectedOfferCardId = {selectedOfferCardId} mapType={'offer'}/>
+          <OfferFullCard
+            fullOffer={fullOffer}
+            reviews={reviews}
+          />
+          <Map
+            offers={nearbyOffers}
+            city = {cityForMap}
+            selectedOfferCardId = {selectedOfferCardId}
+            mapType={'offer'}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearOffers.map((nearOffer) => (nearOffer.id !== selectedOffer.id &&
+              {nearbyOffers.map((nearOffer) => (
                 <OfferCard
                   offerCardType={'offerScreen'}
                   key={nearOffer.id}

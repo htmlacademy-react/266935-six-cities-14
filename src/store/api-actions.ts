@@ -43,7 +43,7 @@ export const fetchFullOfferAction = createAsyncThunk<void, string, {
 
     const fullOfferPath: string = APIRoute.FullOffer + selectedOfferId;
     const commentsPath: string = APIRoute.Reviews + selectedOfferId;
-    const nearbyOffersPath: string = `${APIRoute.Offers }/${ selectedOfferId }/${ APIRoute.Nearby}`;
+    const nearbyOffersPath: string = `${APIRoute.Offers }/${ selectedOfferId }${ APIRoute.Nearby}`;
 
     const fullOffer = await api.get<FullOffer>(fullOfferPath);
     const reviews = await api.get<Review[]>(commentsPath);

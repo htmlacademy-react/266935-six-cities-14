@@ -3,6 +3,8 @@ import { convertRating } from '../../utils';
 
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
+import { store } from '../../store';
+import { fetchFullOfferAction } from '../../store/api-actions';
 
 
 type OfferCardProps= {
@@ -53,7 +55,13 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
       <div
         className={`${options[offerCardType].className}__image-wrapper place-card__image-wrapper`}
       >
-        <Link className="header__logo-link" to={`${AppRoute.SelectedOffer}/${offer.id}`}>
+        <Link
+          className="header__logo-link"
+          to={`${AppRoute.SelectedOffer}/${offer.id}`}
+          onClick={() => {
+            store.dispatch(fetchFullOfferAction(offer.id));
+          }}
+        >
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -126,7 +134,13 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
         <h2
           className="place-card__name"
         >
-          <Link className="header__logo-link" to={`${AppRoute.SelectedOffer}/${offer.id}`}>
+          <Link
+            className="header__logo-link"
+            to={`${AppRoute.SelectedOffer}/${offer.id}`}
+            onClick={() => {
+              store.dispatch(fetchFullOfferAction(offer.id));
+            }}
+          >
             {offer.title}
           </Link>
         </h2>

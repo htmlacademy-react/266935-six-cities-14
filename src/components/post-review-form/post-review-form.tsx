@@ -1,11 +1,8 @@
 import {Fragment} from 'react';
 import { useState, ChangeEvent,FormEvent } from 'react';
 
-type PostReviewFormProps = {
-  onCommentPost: (rating: number, text: string) => void;
-}
 
-function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
+function PostReviewForm(): JSX.Element {
 
   const [selectedRating, setSelectedRating] = useState(0);
   const [textReview, setTextReview] = useState('');
@@ -26,7 +23,6 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
       className="reviews__form form"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        onCommentPost(selectedRating, textReview);
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
