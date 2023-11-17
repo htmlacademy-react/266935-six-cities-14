@@ -14,9 +14,11 @@ import {
   setAuthUserData,
   loadFullOffer,
   loadReviews,
-  loadNearbyOffers
+  loadNearbyOffers,
+  postReview,
 } from './action';
 import { Review } from '../types/review.js';
+import { ReviewData } from '../types/review-data.js';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch: AppDispatch;
@@ -54,6 +56,20 @@ export const fetchFullOfferAction = createAsyncThunk<void, string, {
     dispatch(loadFullOffer(fullOffer.data));
     dispatch(loadReviews(reviews.data));
     dispatch(loadNearbyOffers(nearbyOffers.data));
+  },
+);
+
+export const postReviewAction = createAsyncThunk<void, ReviewData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/login',
+  async ({comment, rating, offerId}, {dispatch, extra: api}) => {
+    const postReviewPath: string = `${APIRoute.Reviews}/${ offerId }`;
+    const {data} = await api.post<Review>(postReviewPath, { comment, rating });
+
+    dispatch(postReview(data));
   },
 );
 

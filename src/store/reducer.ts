@@ -8,6 +8,7 @@ import {
   loadFullOffer,
   loadReviews,
   loadNearbyOffers,
+  postReview,
 } from './action';
 import { Cities, AuthorizationStatus } from '../const';
 
@@ -56,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(postReview, (state, action) => {
+      state.reviews = state.reviews.concat(action.payload);
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

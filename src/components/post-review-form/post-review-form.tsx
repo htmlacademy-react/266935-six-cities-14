@@ -1,8 +1,13 @@
-import {Fragment} from 'react';
-import { useState, ChangeEvent,FormEvent } from 'react';
+import { Fragment } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { store } from '../../store';
+import { postReviewAction } from '../../store/api-actions';
 
+type PostReviewFormProps = {
+  offerId: string;
+}
 
-function PostReviewForm(): JSX.Element {
+function PostReviewForm({offerId}: PostReviewFormProps): JSX.Element {
 
   const [selectedRating, setSelectedRating] = useState(0);
   const [textReview, setTextReview] = useState('');
@@ -18,11 +23,18 @@ function PostReviewForm(): JSX.Element {
     }
   };
 
+  const handleFormSubmit = () => {
+    store.dispatch(postReviewAction({rating: selectedRating, comment: textReview, offerId: offerId}));
+    setSelectedRating(0);
+    setTextReview('');
+  };
+
   return (
     <form
       className="reviews__form form"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        handleFormSubmit();
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>

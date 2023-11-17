@@ -101,7 +101,7 @@ function OfferFullCard({fullOffer, reviews}: OfferFullCardProps): JSX.Element {
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
             <OfferReviewsList offerReviews={reviews}/>
-            {authorizationStatus === AuthorizationStatus.Auth ? <PostReviewForm/> : ''}
+            {authorizationStatus === AuthorizationStatus.Auth ? <PostReviewForm offerId={fullOffer.id}/> : ''}
           </section>
         </div>
       </div>

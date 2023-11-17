@@ -79,6 +79,7 @@ export enum APIRoute {
   FullOffer = '/offers/',
   Reviews = '/comments/',
   Nearby = '/nearby',
+  PostReview = '/comments',
 }
 
 export enum AuthorizationStatus {
