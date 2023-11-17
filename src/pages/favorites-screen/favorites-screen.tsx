@@ -5,8 +5,6 @@ import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
 import { useAppSelector } from '../../hooks';
 
-
-
 function FavoritesScreen(): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
