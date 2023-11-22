@@ -3,9 +3,6 @@ import { convertRating } from '../../utils';
 
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
-import { store } from '../../store';
-import { fetchFullOfferAction } from '../../store/api-actions';
-
 
 type OfferCardProps= {
   offerCardType: 'mainScreen' | 'favoritesScreen' | 'offerScreen';
@@ -58,9 +55,6 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
         <Link
           className="header__logo-link"
           to={`${AppRoute.SelectedOffer}/${offer.id}`}
-          onClick={() => {
-            store.dispatch(fetchFullOfferAction(offer.id));
-          }}
         >
           <img
             className="place-card__image"
@@ -137,9 +131,6 @@ function OfferCard({offerCardType, offer, handleMouseMove}: OfferCardProps) {
           <Link
             className="header__logo-link"
             to={`${AppRoute.SelectedOffer}/${offer.id}`}
-            onClick={() => {
-              store.dispatch(fetchFullOfferAction(offer.id));
-            }}
           >
             {offer.title}
           </Link>

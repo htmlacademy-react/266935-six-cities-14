@@ -18,6 +18,10 @@ export const postReview = createAction<Review>('data/postReview');
 
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
+export const setIsFullOfferLoadingStatus = createAction<boolean>('data/setIsFullOfferLoadingStatus');
+
+export const setFullOfferError = createAction<string | null>('data/setFullOfferError');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setAuthUserData = createAction<UserData>('user/setAuthUserData');

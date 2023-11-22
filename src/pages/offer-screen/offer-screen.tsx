@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from '../../components/header/header';
 import OfferFullCard from '../../components/offer-full-card/offer-full-card';
@@ -10,10 +10,11 @@ import OfferCard from '../../components/offer-card/offer-card';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 import { CitiesForMap } from '../../const';
-import { City, FullOffer, Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { City, FullOffer } from '../../types/offer';
 
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchFullOfferAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function OfferScreen(): JSX.Element{
@@ -21,28 +22,35 @@ function OfferScreen(): JSX.Element{
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<FullOffer['id'] | null>(null);
 
   const params = useParams();
-  let offerIdFromURI: string = '';
 
-  if (params.offerId !== undefined){
-    offerIdFromURI = params.offerId;
-  }
-
-  const offers: Offer[] = useAppSelector((state) => state.offers);
-  const nearbyOffers: Offer[] = useAppSelector((state) => state.nearbyOffers);
-  const fullOffer: FullOffer = useAppSelector((state) => state.fullOffer);
-  const reviews: Review[] = useAppSelector((state) => state.reviews);
-  const selectedCity: string = useAppSelector((state) => state.city);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const selectedCity = useAppSelector((state) => state.city);
+  const isFullOfferLoading = useAppSelector((state) => state.isFullOfferLoading);
+  const fullOfferError = useAppSelector((state) => state.fullOfferError);
 
   const cityForMap: City = CitiesForMap.find((city) => city.name === selectedCity) ?? CitiesForMap[0];
-  const offerFromURI = offers.find((offer) => offer.id === offerIdFromURI);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if(params.offerId){
+      dispatch(fetchFullOfferAction(params.offerId));
+    }
+  }, []);
 
   function handleMouseMove(offerId: FullOffer['id'] | null){
     setSelectedOfferCardId(offerId);
   }
 
-  if (!(fullOffer && offerFromURI)) {
+  if (fullOfferError === 'NOT_FOUND') {
     return (
       <NotFoundScreen />
+    );
+  }
+
+  if(isFullOfferLoading) {
+    return (
+      <LoadingScreen />
     );
   }
 
@@ -56,10 +64,7 @@ function OfferScreen(): JSX.Element{
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferFullCard
-            fullOffer={fullOffer}
-            reviews={reviews}
-          />
+          <OfferFullCard />
           <Map
             offers={nearbyOffers}
             city = {cityForMap}

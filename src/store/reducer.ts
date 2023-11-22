@@ -2,6 +2,8 @@ import {createReducer} from '@reduxjs/toolkit';
 import {
   changeCity,
   loadOffers,
+  setIsFullOfferLoadingStatus,
+  setFullOfferError,
   requireAuthorization,
   setOffersDataLoadingStatus,
   setAuthUserData,
@@ -19,9 +21,11 @@ import { Review } from '../types/review';
 type initialStateType = {
     city: string;
     offers: Offer[];
-    fullOffer: FullOffer;
+    fullOffer: FullOffer | null;
+    fullOfferError: string | null;
     authorizationStatus: AuthorizationStatus;
     isOffersDataLoading: boolean;
+    isFullOfferLoading: boolean;
     authUserData: UserData;
     reviews: Review[];
     nearbyOffers: Offer[];
@@ -30,9 +34,11 @@ type initialStateType = {
 const initialState: initialStateType = {
   city: Cities.Paris,
   offers: [],
-  fullOffer: <FullOffer>{},
+  fullOffer: null,
+  fullOfferError: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
+  isFullOfferLoading: false,
   authUserData: <UserData>{},
   reviews: [],
   nearbyOffers: [],
@@ -45,6 +51,12 @@ const reducer = createReducer(initialState, (builder) => {
       const {city} = action.payload;
 
       state.city = city;
+    })
+    .addCase(setIsFullOfferLoadingStatus, (state, action) => {
+      state.isFullOfferLoading = action.payload;
+    })
+    .addCase(setFullOfferError, (state, action) => {
+      state.fullOfferError = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;

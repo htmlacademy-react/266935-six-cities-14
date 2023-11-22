@@ -3,8 +3,25 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import CitiesList from '../../components/cities-list/cities-list';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchOffersAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function MainScreen(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, []);
+
+  if (isOffersDataLoading) {
+    return(
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
