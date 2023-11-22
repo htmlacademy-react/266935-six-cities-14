@@ -20,7 +20,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuthAction());
-  },[]);
+  },[dispatch]);
 
   return (
     <HelmetProvider>

@@ -36,7 +36,7 @@ function OfferScreen(): JSX.Element{
     if(params.offerId){
       dispatch(fetchFullOfferAction(params.offerId));
     }
-  }, []);
+  }, [dispatch, params.offerId]);
 
   function handleMouseMove(offerId: FullOffer['id'] | null){
     setSelectedOfferCardId(offerId);
