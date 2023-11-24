@@ -16,6 +16,10 @@ export const loadNearbyOffers = createAction<Offer[]>('data/loadNearbyOffers');
 
 export const postReview = createAction<Review>('data/postReview');
 
+export const setIsReviewPosting = createAction<boolean>('data/setIsReviewPosting');
+
+export const setPostReviewError = createAction<string | null>('data/setPostReviewError');
+
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
 export const setIsFullOfferLoadingStatus = createAction<boolean>('data/setIsFullOfferLoadingStatus');

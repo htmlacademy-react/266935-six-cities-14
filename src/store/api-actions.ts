@@ -18,6 +18,8 @@ import {
   postReview,
   setIsFullOfferLoadingStatus,
   setFullOfferError,
+  setPostReviewError,
+  setIsReviewPosting,
 } from './action';
 import { Review } from '../types/review.js';
 import { ReviewData } from '../types/review-data.js';
@@ -75,12 +77,21 @@ export const postReviewAction = createAsyncThunk<void, ReviewData, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/login',
+  'data/postReview',
   async ({comment, rating, offerId}, {dispatch, extra: api}) => {
+    dispatch(setIsReviewPosting(true));
     const postReviewPath: string = `${APIRoute.Reviews}/${ offerId }`;
-    const {data} = await api.post<Review>(postReviewPath, { comment, rating });
 
-    dispatch(postReview(data));
+    try{
+      const {data} = await api.post<Review>(postReviewPath, { comment, rating });
+      dispatch(postReview(data));
+    }catch (e: unknown){
+      if (e instanceof AxiosError){
+        dispatch(setPostReviewError(e.message));
+      }
+    }
+
+    dispatch(setIsReviewPosting(false));
   },
 );
 

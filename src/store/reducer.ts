@@ -11,6 +11,8 @@ import {
   loadReviews,
   loadNearbyOffers,
   postReview,
+  setIsReviewPosting,
+  setPostReviewError,
 } from './action';
 import { Cities, AuthorizationStatus } from '../const';
 
@@ -29,6 +31,8 @@ type initialStateType = {
     authUserData: UserData;
     reviews: Review[];
     nearbyOffers: Offer[];
+    isReviewPosting: boolean;
+    postReviewError: string | null;
 };
 
 const initialState: initialStateType = {
@@ -42,6 +46,8 @@ const initialState: initialStateType = {
   authUserData: <UserData>{},
   reviews: [],
   nearbyOffers: [],
+  isReviewPosting: false,
+  postReviewError: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -81,6 +87,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthUserData, (state, action) => {
       state.authUserData = action.payload;
+    })
+    .addCase(setIsReviewPosting, (state, action) => {
+      state.isReviewPosting = action.payload;
+    })
+    .addCase(setPostReviewError, (state, action) => {
+      state.postReviewError = action.payload;
     });
 });
 

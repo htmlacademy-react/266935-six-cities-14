@@ -15,7 +15,7 @@ function MainScreen(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-  }, []);
+  }, [dispatch]);
 
   if (isOffersDataLoading) {
     return(
