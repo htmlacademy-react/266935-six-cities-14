@@ -1,11 +1,15 @@
-import {Fragment} from 'react';
-import { useState, ChangeEvent,FormEvent } from 'react';
+import { Fragment } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { store } from '../../store';
+import { postReviewAction } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
 
 type PostReviewFormProps = {
-  onCommentPost: (rating: number, text: string) => void;
+  offerId: string;
 }
 
-function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
+function PostReviewForm({offerId}: PostReviewFormProps): JSX.Element {
+  const isReviewPosting = useAppSelector((state) => state.isReviewPosting);
 
   const [selectedRating, setSelectedRating] = useState(0);
   const [textReview, setTextReview] = useState('');
@@ -21,12 +25,18 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
     }
   };
 
+  const handleFormSubmit = () => {
+    store.dispatch(postReviewAction({rating: selectedRating, comment: textReview, offerId: offerId}));
+    setSelectedRating(0);
+    setTextReview('');
+  };
+
   return (
     <form
       className="reviews__form form"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        onCommentPost(selectedRating, textReview);
+        handleFormSubmit();
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -41,6 +51,7 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
               type="radio"
               checked={number === selectedRating}
               onChange={handleInputChange}
+              disabled={isReviewPosting}
             />
             <label htmlFor={`${number}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
               <svg className="form__star-image" width="37" height="33">
@@ -57,6 +68,7 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={textReview}
         onChange={handleTextAreaChange}
+        disabled={isReviewPosting}
       >
 
       </textarea>
@@ -64,7 +76,13 @@ function PostReviewForm({onCommentPost}: PostReviewFormProps): JSX.Element {
         <p className="reviews__help">
       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isValid}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={!isValid || isReviewPosting}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

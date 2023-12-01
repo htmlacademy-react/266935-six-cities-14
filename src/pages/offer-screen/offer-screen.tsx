@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from '../../components/header/header';
 import OfferFullCard from '../../components/offer-full-card/offer-full-card';
@@ -9,40 +9,50 @@ import OfferCard from '../../components/offer-card/offer-card';
 
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-import { FullOffer, Offer } from '../../types/offer';
-import { Review } from '../../types/review';
-import { useAppSelector } from '../../hooks';
+import { CitiesForMap } from '../../const';
+import { City, FullOffer } from '../../types/offer';
 
-type OfferScreenProps = {
-  reviews: Review[];
-  onCommentPost: (rating: number, text: string) => void;
-}
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchFullOfferAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
+
+function OfferScreen(): JSX.Element{
 
   const [selectedOfferCardId, setSelectedOfferCardId] = useState<FullOffer['id'] | null>(null);
 
-  const offers = useAppSelector((state) => state.offers);
+  const params = useParams();
+
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const selectedCity = useAppSelector((state) => state.city);
+  const isFullOfferLoading = useAppSelector((state) => state.isFullOfferLoading);
+  const fullOfferError = useAppSelector((state) => state.fullOfferError);
+
+  const cityForMap: City = CitiesForMap.find((city) => city.name === selectedCity) ?? CitiesForMap[0];
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if(params.offerId){
+      dispatch(fetchFullOfferAction(params.offerId));
+    }
+  }, [dispatch, params.offerId]);
+
   function handleMouseMove(offerId: FullOffer['id'] | null){
     setSelectedOfferCardId(offerId);
   }
 
-  const params = useParams();
-  let offerStringId: string = '';
-
-  if (params.offerId !== undefined){
-    offerStringId = params.offerId;
-  }
-
-  const selectedOffer = offers.find((offersItem) => offersItem.id === offerStringId);
-
-  if (selectedOffer === undefined) {
+  if (fullOfferError === 'NOT_FOUND') {
     return (
       <NotFoundScreen />
     );
   }
-  const nearOffers: Offer[] = offers.filter((offer) => offer.id !== selectedOffer.id);
-  const offerReviews = reviews.filter((review) => review.id === selectedOffer.id);
+
+  if(isFullOfferLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">
@@ -54,14 +64,19 @@ function OfferScreen({ reviews, onCommentPost}: OfferScreenProps): JSX.Element{
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferFullCard offer={selectedOffer} offerReviews={offerReviews} onCommentPost={onCommentPost}/>
-          <Map offers={nearOffers} city = {selectedOffer.city} selectedOfferCardId = {selectedOfferCardId} mapType={'offer'}/>
+          <OfferFullCard />
+          <Map
+            offers={nearbyOffers}
+            city = {cityForMap}
+            selectedOfferCardId = {selectedOfferCardId}
+            mapType={'offer'}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearOffers.map((nearOffer) => (nearOffer.id !== selectedOffer.id &&
+              {nearbyOffers.map((nearOffer) => (
                 <OfferCard
                   offerCardType={'offerScreen'}
                   key={nearOffer.id}

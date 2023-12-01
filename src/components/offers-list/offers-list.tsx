@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import { Cities } from '../../mocks/city';
+import { CitiesForMap } from '../../const';
 import { SortCallbacks } from '../../const';
 import { SortTypes } from '../../types/sort-types';
 import Map from '../map/map';
@@ -29,10 +29,10 @@ function OffersList({offerCardType}: OffersListProps): JSX.Element {
   const offersInSelectedCity = offers.filter((offer) => offer.city.name === selectedCity);
   offersInSelectedCity.sort(SortCallbacks[sortTypeSetting]);
 
-  let cityForMap = Cities.find((city) => city.name === selectedCity);
+  let cityForMap = CitiesForMap.find((city) => city.name === selectedCity);
 
   if(cityForMap === undefined) {
-    cityForMap = Cities[0];
+    cityForMap = CitiesForMap[0];
   }
 
   return (
